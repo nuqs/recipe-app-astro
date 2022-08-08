@@ -24,7 +24,6 @@ class AppComponent extends StatefulWidget {
 class _AppComponentState extends State<AppComponent> {
   @override
   void initState() {
-    print("AppComponent.initState()");
     super.initState();
   }
 
