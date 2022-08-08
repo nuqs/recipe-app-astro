@@ -1,8 +1,8 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:recipe_app_astro/bloc/bloc/category_list_bloc.dart';
 import 'package:recipe_app_astro/bloc/categories/categories_bloc.dart';
+import 'package:recipe_app_astro/bloc/category_list/category_list_bloc.dart';
 import 'package:recipe_app_astro/config/size_config.dart';
 import 'package:recipe_app_astro/constant/color.dart';
 import 'package:recipe_app_astro/models/food_categories.dart';
