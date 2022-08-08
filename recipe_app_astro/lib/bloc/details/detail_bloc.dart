@@ -13,7 +13,6 @@ part 'detail_state.dart';
 class DetailBloc extends Bloc<DetailEvent, DetailState> {
   DetailBloc() : super(DetailInitial()) {
     on<GetDetail>((event, emit) async {
-      print("bloc");
       try {
         // need to make differenct function because datatype is not the same
         // food detail
@@ -21,41 +20,20 @@ class DetailBloc extends Bloc<DetailEvent, DetailState> {
           List<FoodDetails> detail = [];
           emit(DetailLoading());
           // check for cache data
-          final List<FoodDetails> detailCache = await Hive.box("FOODDETAILS").get(event.id, defaultValue: []);
-          print("luar");
-          // if exist, just use the cache data
-          if (detailCache.isNotEmpty) {
-            print("cache food data");
-            detail = detailCache;
+          cacheFoodData(detail, event.id);
+          //if not, fetch new data
+          var response = await HomeRepository().getFoodDetails(event.id);
+          if (response is FoodDetailsResponse) {
+            detail = response.meals ?? [];
+            Hive.box("FOODDETAILS").put(event.id, detail);
             emit(DetailFoodLoaded(detail));
-          } else {
-            //if not, fetch new data
-            var response = await HomeRepository().getFoodDetails(event.id);
-            if (response is FoodDetailsResponse) {
-              detail = response.meals ?? [];
-              Hive.box("FOODDETAILS").put(event.id, detail);
-              print("save as food cache");
-              emit(DetailFoodLoaded(detail));
-            }
           }
-          // var response = await HomeRepository().getFoodDetails(event.id);
-          // if (response is FoodDetailsResponse) {
-          //   detail = response.meals ?? [];
-          //   Hive.box("FOODDETAILS").put(event.id, detail);
-          //   print("save as food cache");
-          //   emit(DetailFoodLoaded(detail));
-          // }
         } else {
           // drink detail
           List<DrinkDetails> detail = [];
           emit(DetailLoading());
           // check for cache data
-          final List<DrinkDetails> detailCache = await Hive.box("DRINKDETAILS").get(event.id, defaultValue: []);
-          // if exist, just use the cache data
-          if (detailCache.isNotEmpty) {
-            detail = detailCache;
-            emit(DetailDrinkLoaded(detail));
-          }
+          cacheDrinkData(detail, event.id);
           //if not, fetch new data
           var response = await HomeRepository().getDrinkDetails(event.id);
           if (response is DrinkDetailsResponse) {
@@ -68,5 +46,28 @@ class DetailBloc extends Bloc<DetailEvent, DetailState> {
         emit(const DetailError("Failed to fetch data. is your device online?"));
       }
     });
+  }
+
+  Future cacheFoodData(List<FoodDetails> detail, String id) async {
+    final List<FoodDetails> detailCache = await Hive.box("FOODDETAILS").get(id, defaultValue: []);
+    print("luar");
+    // if exist, just use the cache data
+    if (detailCache.isNotEmpty) {
+      detail = detailCache;
+      emit(DetailFoodLoaded(detail));
+      return true;
+    }
+    return true;
+  }
+
+  Future cacheDrinkData(List<DrinkDetails> detail, String id) async {
+    final List<DrinkDetails> detailCache = await Hive.box("DRINKDETAILS").get(id, defaultValue: []);
+    // if exist, just use the cache data
+    if (detailCache.isNotEmpty) {
+      detail = detailCache;
+      emit(DetailDrinkLoaded(detail));
+      return true;
+    }
+    return true;
   }
 }

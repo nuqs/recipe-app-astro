@@ -34,12 +34,6 @@ class HomeRepository extends BaseHomeRepository {
 
   @override
   Future<dynamic> getFoodDetails(String id) async {
-    // FoodDetailsResponse detailCache = await Hive.box("FOODDETAILS").get(id, defaultValue: []);
-    // print("repo");
-    // if (detailCache.toJson().isNotEmpty) {
-    //   print("cache food data");
-    //   return detailCache;
-    // }
     return await Api.getFoodDetails(id);
   }
 
