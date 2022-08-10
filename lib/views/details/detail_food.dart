@@ -23,25 +23,15 @@ class _DetailFoodState extends State<DetailFood> {
   final DetailBloc _detailBloc = DetailBloc();
   int _current = 1;
   int _index = 0;
-  double _heightPageview = 2000.0;
 
   @override
   void initState() {
     _detailBloc.add(GetDetail(item: widget.item, id: widget.id));
-    print("initsate");
     super.initState();
   }
 
   void continueButtonTapped(int index) {
-    if (index == 0) {
-      _heightPageview = 2000.0;
-    } else if (index == 1) {
-      _heightPageview = 500.0;
-    } else {
-      _heightPageview = 100.0;
-    }
     setState(() {
-      _heightPageview;
       _index = index;
     });
     // animate to next pageview
@@ -111,7 +101,7 @@ class _DetailFoodState extends State<DetailFood> {
                   ),
                 ),
                 Positioned(
-                  top: 300,
+                  top: 250,
                   left: 16,
                   child: Wrap(
                     children: [
@@ -132,12 +122,13 @@ class _DetailFoodState extends State<DetailFood> {
             ),
             SingleChildScrollView(
               child: Padding(
-                padding: const EdgeInsets.only(top: 400),
+                padding: const EdgeInsets.only(top: 350),
                 child: Container(
                   width: MediaQuery.of(context).size.width,
                   decoration: BoxDecoration(borderRadius: BorderRadius.circular(20), color: kPrimaryColor),
                   padding: const EdgeInsets.only(top: 6, bottom: 100),
                   child: Column(
+                    mainAxisSize: MainAxisSize.min,
                     children: <Widget>[
                       Padding(
                         padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 22),
@@ -163,7 +154,7 @@ class _DetailFoodState extends State<DetailFood> {
                         color: kGreyColor.withOpacity(0.2),
                       ),
                       Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 22),
+                        padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 16),
                         child: Container(
                           decoration: BoxDecoration(
                               border: Border.all(
@@ -246,7 +237,7 @@ class _DetailFoodState extends State<DetailFood> {
                         ),
                       ),
                       SizedBox(
-                        height: 2000,
+                        height: 700,
                         child: BlocProvider(
                           create: (_) => _detailBloc,
                           child: BlocListener<DetailBloc, DetailState>(
@@ -337,9 +328,9 @@ class _DetailFoodState extends State<DetailFood> {
                                                       ),
                                                     ],
                                                   ),
-                                                  // 20 because backend is not proper, no list to get length
+                                                  // 5 because backend is not proper, no list to get length
                                                   // will use first index because again no list is constructed for ingredients
-                                                  for (var i = 0; i < 20; i++) ...[
+                                                  for (var i = 0; i < 5; i++) ...[
                                                     Column(
                                                       children: [
                                                         Divider(

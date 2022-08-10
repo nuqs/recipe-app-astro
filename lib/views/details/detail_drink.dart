@@ -23,7 +23,6 @@ class _DetailDrinkState extends State<DetailDrink> {
   final DetailBloc _detailBloc = DetailBloc();
   int _current = 1;
   int _index = 0;
-  double _heightPageview = 2000.0;
 
   @override
   void initState() {
@@ -32,15 +31,7 @@ class _DetailDrinkState extends State<DetailDrink> {
   }
 
   void continueButtonTapped(int index) {
-    if (index == 0) {
-      _heightPageview = 2000.0;
-    } else if (index == 1) {
-      _heightPageview = 500.0;
-    } else {
-      _heightPageview = 100.0;
-    }
     setState(() {
-      _heightPageview;
       _index = index;
     });
     // animate to next pageview
@@ -110,7 +101,7 @@ class _DetailDrinkState extends State<DetailDrink> {
                   ),
                 ),
                 Positioned(
-                  top: 300,
+                  top: 250,
                   left: 16,
                   child: Wrap(
                     children: [
@@ -131,7 +122,7 @@ class _DetailDrinkState extends State<DetailDrink> {
             ),
             SingleChildScrollView(
               child: Padding(
-                padding: const EdgeInsets.only(top: 400),
+                padding: const EdgeInsets.only(top: 350),
                 child: Container(
                   width: MediaQuery.of(context).size.width,
                   decoration: BoxDecoration(borderRadius: BorderRadius.circular(20), color: kPrimaryColor),
@@ -162,7 +153,7 @@ class _DetailDrinkState extends State<DetailDrink> {
                         color: kGreyColor.withOpacity(0.2),
                       ),
                       Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 22),
+                        padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 16),
                         child: Container(
                           decoration: BoxDecoration(
                               border: Border.all(
@@ -245,7 +236,7 @@ class _DetailDrinkState extends State<DetailDrink> {
                         ),
                       ),
                       SizedBox(
-                        height: _heightPageview,
+                        height: 700,
                         child: BlocProvider(
                           create: (_) => _detailBloc,
                           child: BlocListener<DetailBloc, DetailState>(
@@ -274,124 +265,126 @@ class _DetailDrinkState extends State<DetailDrink> {
                                         controller: _pageController,
                                         itemBuilder: (BuildContext context, index) {
                                           if (index == 0) {
-                                            return Padding(
-                                              padding: const EdgeInsets.all(16),
-                                              child: Column(
-                                                children: [
-                                                  Row(
-                                                    children: [
-                                                      Column(
-                                                        mainAxisAlignment: MainAxisAlignment.center,
-                                                        crossAxisAlignment: CrossAxisAlignment.start,
-                                                        children: [
-                                                          const Text(
-                                                            "Ingredients for",
-                                                            style: TextStyle(fontSize: 28, color: kBlackColor, fontWeight: FontWeight.bold),
-                                                          ),
-                                                          Text(
-                                                            _current.toString() + " servings",
-                                                            style: const TextStyle(fontSize: 24, color: kBlackColor),
-                                                          ),
-                                                        ],
-                                                      ),
-                                                      const Spacer(),
-                                                      ClipOval(
-                                                        child: Material(
-                                                          color: kSecondaryColor,
-                                                          child: InkWell(
-                                                            splashColor: Colors.red,
-                                                            onTap: () {
-                                                              setState(() {
-                                                                _current++;
-                                                              });
-                                                            },
-                                                            child: const SizedBox(width: 30, height: 30, child: Icon(Icons.add, size: 14, color: kPrimaryColor)),
-                                                          ),
-                                                        ),
-                                                      ),
-                                                      const SizedBox(width: 16),
-                                                      Text(
-                                                        _current.toString(),
-                                                        style: const TextStyle(fontSize: 20, color: kBlackColor),
-                                                      ),
-                                                      const SizedBox(width: 16),
-                                                      ClipOval(
-                                                        child: Material(
-                                                          color: kSecondaryColor,
-                                                          child: InkWell(
-                                                            splashColor: Colors.red,
-                                                            onTap: () {
-                                                              if (_current > 1) {
-                                                                setState(() {
-                                                                  _current--;
-                                                                });
-                                                              } else {
-                                                                // do nothing
-                                                              }
-                                                            },
-                                                            child: const SizedBox(width: 30, height: 30, child: Icon(Icons.remove, size: 14, color: kPrimaryColor)),
-                                                          ),
-                                                        ),
-                                                      ),
-                                                    ],
-                                                  ),
-                                                  // 15 because backend is not proper, no list to get length
-                                                  // will use first index because again no list is constructed for ingredients
-                                                  for (var i = 0; i < 20; i++) ...[
-                                                    Column(
+                                            return SingleChildScrollView(
+                                              child: Padding(
+                                                padding: const EdgeInsets.all(16),
+                                                child: Column(
+                                                  children: [
+                                                    Row(
                                                       children: [
-                                                        Divider(
-                                                          thickness: 1,
-                                                          color: kGreyColor.withOpacity(0.2),
-                                                        ),
-                                                        Row(
+                                                        Column(
                                                           mainAxisAlignment: MainAxisAlignment.center,
-                                                          crossAxisAlignment: CrossAxisAlignment.center,
+                                                          crossAxisAlignment: CrossAxisAlignment.start,
                                                           children: [
-                                                            Container(
-                                                              height: 50.0,
-                                                              width: 50.0,
-                                                              alignment: Alignment.center,
-                                                              child: ClipRRect(
-                                                                borderRadius: BorderRadius.circular(10.0),
-                                                                child: CachedNetworkImage(
-                                                                  imageUrl: detail[0].strDrinkThumb!,
-                                                                  fit: BoxFit.cover,
-                                                                  errorWidget: (context, url, error) => const Icon(Icons.error),
-                                                                ),
-                                                              ),
+                                                            const Text(
+                                                              "Ingredients for",
+                                                              style: TextStyle(fontSize: 28, color: kBlackColor, fontWeight: FontWeight.bold),
                                                             ),
-                                                            Expanded(
-                                                              child: Padding(
-                                                                padding: const EdgeInsets.all(20),
-                                                                child: Column(
-                                                                  mainAxisAlignment: MainAxisAlignment.start,
-                                                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                                                  children: [
-                                                                    Text(
-                                                                      detail[0].strIngredient2!,
-                                                                      style: const TextStyle(color: kBlackColor, fontSize: 18, fontWeight: FontWeight.bold),
-                                                                    ),
-                                                                    const SizedBox(
-                                                                      height: 6,
-                                                                    ),
-                                                                    Text(
-                                                                      measurementStr + " " + measurement[1],
-                                                                      style: const TextStyle(
-                                                                        color: kGreyColor,
-                                                                        fontSize: 14,
-                                                                      ),
-                                                                    ),
-                                                                  ],
-                                                                ),
-                                                              ),
+                                                            Text(
+                                                              _current.toString() + " servings",
+                                                              style: const TextStyle(fontSize: 24, color: kBlackColor),
                                                             ),
                                                           ],
                                                         ),
+                                                        const Spacer(),
+                                                        ClipOval(
+                                                          child: Material(
+                                                            color: kSecondaryColor,
+                                                            child: InkWell(
+                                                              splashColor: Colors.red,
+                                                              onTap: () {
+                                                                setState(() {
+                                                                  _current++;
+                                                                });
+                                                              },
+                                                              child: const SizedBox(width: 30, height: 30, child: Icon(Icons.add, size: 14, color: kPrimaryColor)),
+                                                            ),
+                                                          ),
+                                                        ),
+                                                        const SizedBox(width: 16),
+                                                        Text(
+                                                          _current.toString(),
+                                                          style: const TextStyle(fontSize: 20, color: kBlackColor),
+                                                        ),
+                                                        const SizedBox(width: 16),
+                                                        ClipOval(
+                                                          child: Material(
+                                                            color: kSecondaryColor,
+                                                            child: InkWell(
+                                                              splashColor: Colors.red,
+                                                              onTap: () {
+                                                                if (_current > 1) {
+                                                                  setState(() {
+                                                                    _current--;
+                                                                  });
+                                                                } else {
+                                                                  // do nothing
+                                                                }
+                                                              },
+                                                              child: const SizedBox(width: 30, height: 30, child: Icon(Icons.remove, size: 14, color: kPrimaryColor)),
+                                                            ),
+                                                          ),
+                                                        ),
                                                       ],
-                                                    )
+                                                    ),
+                                                    // 5 because backend is not proper, no list to get length
+                                                    // will use first index because again no list is constructed for ingredients
+                                                    for (var i = 0; i < 5; i++) ...[
+                                                      Column(
+                                                        children: [
+                                                          Divider(
+                                                            thickness: 1,
+                                                            color: kGreyColor.withOpacity(0.2),
+                                                          ),
+                                                          Row(
+                                                            mainAxisAlignment: MainAxisAlignment.center,
+                                                            crossAxisAlignment: CrossAxisAlignment.center,
+                                                            children: [
+                                                              Container(
+                                                                height: 50.0,
+                                                                width: 50.0,
+                                                                alignment: Alignment.center,
+                                                                child: ClipRRect(
+                                                                  borderRadius: BorderRadius.circular(10.0),
+                                                                  child: CachedNetworkImage(
+                                                                    imageUrl: detail[0].strDrinkThumb!,
+                                                                    fit: BoxFit.cover,
+                                                                    errorWidget: (context, url, error) => const Icon(Icons.error),
+                                                                  ),
+                                                                ),
+                                                              ),
+                                                              Expanded(
+                                                                child: Padding(
+                                                                  padding: const EdgeInsets.all(20),
+                                                                  child: Column(
+                                                                    mainAxisAlignment: MainAxisAlignment.start,
+                                                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                                                    children: [
+                                                                      Text(
+                                                                        detail[0].strIngredient2!,
+                                                                        style: const TextStyle(color: kBlackColor, fontSize: 18, fontWeight: FontWeight.bold),
+                                                                      ),
+                                                                      const SizedBox(
+                                                                        height: 6,
+                                                                      ),
+                                                                      Text(
+                                                                        measurementStr + " " + measurement[1],
+                                                                        style: const TextStyle(
+                                                                          color: kGreyColor,
+                                                                          fontSize: 14,
+                                                                        ),
+                                                                      ),
+                                                                    ],
+                                                                  ),
+                                                                ),
+                                                              ),
+                                                            ],
+                                                          ),
+                                                        ],
+                                                      )
+                                                    ],
                                                   ],
-                                                ],
+                                                ),
                                               ),
                                             );
                                           } else if (index == 1) {
