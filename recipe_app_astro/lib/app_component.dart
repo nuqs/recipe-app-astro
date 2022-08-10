@@ -7,6 +7,8 @@ import 'package:recipe_app_astro/bloc/details/detail_bloc.dart';
 import 'package:recipe_app_astro/constant/color.dart';
 import 'package:recipe_app_astro/constant/route.dart';
 import 'package:recipe_app_astro/debug.dart';
+import 'package:recipe_app_astro/views/home/home_drink.dart';
+import 'package:recipe_app_astro/views/home/home_food.dart';
 import 'package:recipe_app_astro/views/main_menu.dart';
 
 class AppComponent extends StatefulWidget {
@@ -114,6 +116,20 @@ class _AppComponentState extends State<AppComponent> {
       return MaterialPageRoute(
         settings: settings,
         builder: (_) => const MainMenuPage(),
+      );
+    }
+
+    if (settings.name == Routes.foodHome) {
+      return MaterialPageRoute(
+        settings: settings,
+        builder: (_) => const HomeFood(item: "food"),
+      );
+    }
+
+    if (settings.name == Routes.drinkHome) {
+      return MaterialPageRoute(
+        settings: settings,
+        builder: (_) => const HomeDrink(item: "drink"),
       );
     }
 
