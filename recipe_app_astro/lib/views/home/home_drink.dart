@@ -231,6 +231,7 @@ class _HomeDrinkState extends State<HomeDrink> {
                                             itemCount: category.length,
                                             itemBuilder: (context, index) {
                                               return InkWell(
+                                                key: const Key("drinkDetailNavigator"),
                                                 onTap: () {
                                                   Navigator.push(context, MaterialPageRoute(builder: (context) => DetailDrink(item: "drink", id: category[index].idDrink!, imageUrl: category[index].strDrinkThumb!, rating: rating)));
                                                 },

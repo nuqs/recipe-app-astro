@@ -232,6 +232,7 @@ class _HomeFoodState extends State<HomeFood> {
                                             itemCount: category.length,
                                             itemBuilder: (context, index) {
                                               return InkWell(
+                                                key: const Key("foodDetailNavigator"),
                                                 onTap: () async {
                                                   await Navigator.push(context, MaterialPageRoute(builder: (context) => DetailFood(item: "food", id: category[index].idMeal!, imageUrl: category[index].strMealThumb!, rating: rating)));
                                                 },

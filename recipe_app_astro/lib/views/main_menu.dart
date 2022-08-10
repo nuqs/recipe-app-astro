@@ -101,7 +101,9 @@ class _MainMenuPageState extends State<MainMenuPage> {
                     ),
                     // food column
                     InkWell(
+                      key: const Key("foodNavigator"),
                       onTap: () {
+                        //Navigator.pushNamed(context, Routes.foodHome);
                         Navigator.push(context, MaterialPageRoute(builder: (context) => const HomeFood(item: "food")));
                       },
                       child: Column(
@@ -214,7 +216,9 @@ class _MainMenuPageState extends State<MainMenuPage> {
                     ),
                     // beverage column
                     InkWell(
+                      key: const Key("drinkNavigator"),
                       onTap: () {
+                        //Navigator.pushNamed(context, Routes.foodHome);
                         Navigator.push(context, MaterialPageRoute(builder: (context) => const HomeDrink(item: "drink")));
                       },
                       child: Column(
