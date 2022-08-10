@@ -44,20 +44,26 @@ class DetailBloc extends Bloc<DetailEvent, DetailState> {
         }
       } on Exception {
         emit(const DetailError("Failed to fetch data. is your device online?"));
+        if (event.item == "food") {
+          List<FoodDetails> detail = [];
+          // check for cache data
+          cacheFoodData(detail, event.id);
+        } else {
+          List<DrinkDetails> detail = [];
+          // check for cache data
+          cacheDrinkData(detail, event.id);
+        }
       }
     });
   }
 
   Future cacheFoodData(List<FoodDetails> detail, String id) async {
     final List<FoodDetails> detailCache = await Hive.box("FOODDETAILS").get(id, defaultValue: []);
-    print("luar");
     // if exist, just use the cache data
     if (detailCache.isNotEmpty) {
       detail = detailCache;
       emit(DetailFoodLoaded(detail));
-      return true;
     }
-    return true;
   }
 
   Future cacheDrinkData(List<DrinkDetails> detail, String id) async {
@@ -66,8 +72,6 @@ class DetailBloc extends Bloc<DetailEvent, DetailState> {
     if (detailCache.isNotEmpty) {
       detail = detailCache;
       emit(DetailDrinkLoaded(detail));
-      return true;
     }
-    return true;
   }
 }
